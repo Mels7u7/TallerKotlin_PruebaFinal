@@ -15,16 +15,28 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="377dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="680dp"
-        android:ems="10"
-        android:hint="Enter message"
-        android:inputType="textPersonName"
-        app:layout_constraintTop_toTopOf="@+id/commentRecyclerView"
-        tools:layout_editor_absoluteX="16dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="355dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="680dp"
+            android:ems="10"
+            android:hint="Enter message"
+            android:inputType="textPersonName" />
+
+        <ImageView
+            android:id="@+id/icon_enter_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="695dp"
+            app:srcCompat="@drawable/ic_near_me_black_24dp" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

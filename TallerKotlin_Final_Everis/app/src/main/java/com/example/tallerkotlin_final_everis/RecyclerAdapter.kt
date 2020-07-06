@@ -66,8 +66,6 @@ class RecyclerAdapter(private var activity: AppCompatActivity, private var data:
     }
 
     class FeedHolder(v: View): RecyclerView.ViewHolder(v), View.OnClickListener {
-
-
         init {
             v.setOnClickListener(this)
         }

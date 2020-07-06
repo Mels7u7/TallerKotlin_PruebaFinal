@@ -1,6 +1,10 @@
 package com.example.tallerkotlin_final_everis
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tallerkotlin_final_everis.network.FeedResponse
 import com.example.tallerkotlin_final_everis.network.FriendResponse
@@ -30,11 +36,10 @@ RecyclerView.Adapter<FriendsAdapter.FriendHolder>() {
         this.data = friendList
         this.notifyDataSetChanged()
     }
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FriendHolder, position: Int) {
         val friend : FriendResponse = this.data[position]
-        holder.itemView.tv_friend_name.text = friend.name
-
-
+        holder.itemView.tv_friend_name.text = friend.name +" "+friend.lastname
 
         if(!friend.image.isBlank()){
             Picasso.get()
@@ -42,28 +47,37 @@ RecyclerView.Adapter<FriendsAdapter.FriendHolder>() {
                 .into(holder.itemView.image_user_friend!!)
         }
 
+        holder.itemView.setOnClickListener{listener.onItemClickListener(friend)}
+        holder.itemView.card_friends.setOnClickListener{
+            //val mSharedP = mSharedPreferences(activity)
+            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" +friend.phone))
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CALL_PHONE),
+                    1)
 
-
+            }else {
+                activity.startActivity(intent)
+            }
+        }
     }
-
 
     override fun getItemCount(): Int {
         return data.size
     }
 
-    class FriendHolder(v: View): RecyclerView.ViewHolder(v), View.OnClickListener {
+    class FriendHolder(v: View): RecyclerView.ViewHolder(v), View.OnClickListener{
 
 
         init {
             v.setOnClickListener(this)
         }
-        override fun onClick(v: View?) {
-            if (v != null) {
-                Toast.makeText(v.context, "Item", Toast.LENGTH_SHORT).show()
-            }
+        override fun onClick(v: View? ) {
+
         }
         interface OnAdapterListener {
             fun onItemClickListener( item: FriendResponse)
+
         }
 
     }

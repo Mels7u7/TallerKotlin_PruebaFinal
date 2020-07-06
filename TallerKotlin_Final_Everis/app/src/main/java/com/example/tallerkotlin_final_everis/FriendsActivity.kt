@@ -1,8 +1,11 @@
 package com.example.tallerkotlin_final_everis
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tallerkotlin_final_everis.network.FriendResponse
 import com.example.tallerkotlin_final_everis.network.Repository
@@ -12,6 +15,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+
 
 class FriendsActivity : AppCompatActivity(), FriendsAdapter.FriendHolder.OnAdapterListener{
     private lateinit var adapter: FriendsAdapter
@@ -25,6 +29,9 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.FriendHolder.OnAdapt
         friendRecyclerView.layoutManager= linearLayoutManager
         friendRecyclerView.adapter = adapter
         callService()
+
+
+
     }
     private fun callService() {
 
@@ -41,6 +48,7 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.FriendHolder.OnAdapt
 
                         val friend : List<FriendResponse>?  = response.body()
                         if( friend != null) updateInfo(friend)
+
                     }else{
                         Toast.makeText(this@FriendsActivity, "Error ${response.code()}", Toast.LENGTH_LONG).show()
                     }
@@ -53,7 +61,10 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.FriendHolder.OnAdapt
     private fun updateInfo(list:List<FriendResponse>){
         adapter.updateList(list)
     }
+
+
+    //@SuppressLint("MissingPermission")
     override fun onItemClickListener(item: FriendResponse) {
-        TODO("Not yet implemented")
+
     }
 }
